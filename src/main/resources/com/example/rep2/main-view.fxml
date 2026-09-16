@@ -1,16 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.example.rep2.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.rep2.MainController"
+            prefWidth="1000.0"
+            prefHeight="650.0"
+            stylesheets="@style.css"
+            styleClass="root-pane">
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+    <top>
+        <VBox spacing="5.0" styleClass="header">
+            <padding>
+                <Insets top="18.0" right="25.0" bottom="18.0" left="25.0"/>
+            </padding>
+
+            <Label text="HTML Structure Editor"
+                   styleClass="title"/>
+
+            <Label text="Визуальный редактор структуры HTML-документа"
+                   styleClass="subtitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.32">
+
+            <VBox spacing="12.0" styleClass="panel">
+
+                <padding>
+                    <Insets top="20.0" right="15.0" bottom="20.0" left="20.0"/>
+                </padding>
+
+                <Label text="Структура документа"
+                       styleClass="section-title"/>
+
+                <TreeView fx:id="structureTree"
+                          VBox.vgrow="ALWAYS"/>
+
+                <Button text="Удалить выбранный элемент"
+                        onAction="#onDelete"
+                        maxWidth="Infinity"
+                        styleClass="danger-button"/>
+
+            </VBox>
+
+            <VBox spacing="15.0" styleClass="panel">
+
+                <padding>
+                    <Insets top="20.0" right="20.0" bottom="20.0" left="15.0"/>
+                </padding>
+
+                <Label text="Добавление элементов"
+                       styleClass="section-title"/>
+
+                <VBox spacing="8.0">
+                    <Label text="Контейнер HTML"/>
+                    <HBox spacing="8.0">
+                        <TextField fx:id="tagField"
+                                   promptText="Например: div, section, body"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button text="Добавить"
+                                onAction="#onAddContainer"/>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <Label text="Текстовый узел"/>
+                    <HBox spacing="8.0">
+                        <TextField fx:id="textField"
+                                   promptText="Введите текст"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button text="Добавить"
+                                onAction="#onAddText"/>
+                    </HBox>
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <Label text="Изображение"/>
+                    <Button text="Выбрать изображение с компьютера"
+                            onAction="#onAddImage"
+                            maxWidth="Infinity"/>
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <Label text="Строка таблицы"/>
+                    <HBox spacing="8.0">
+                        <TextField fx:id="rowField"
+                                   promptText="Например: Иван | 20 | Москва"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button text="Добавить"
+                                onAction="#onAddTableRow"/>
+                    </HBox>
+                </VBox>
+
+                <Separator/>
+
+                <VBox spacing="8.0">
+                    <Label text="CSS-класс выбранного элемента"/>
+                    <HBox spacing="8.0">
+                        <TextField fx:id="cssClassField"
+                                   promptText="Например: container"
+                                   HBox.hgrow="ALWAYS"/>
+                        <Button text="Добавить класс"
+                                onAction="#onAddCssClass"/>
+                    </HBox>
+                </VBox>
+
+                <Separator/>
+
+                <Label text="Результат"
+                       styleClass="section-title"/>
+
+                <TextArea fx:id="htmlPreview"
+                          editable="false"
+                          wrapText="false"
+                          promptText="Здесь появится сгенерированный HTML..."
+                          VBox.vgrow="ALWAYS"/>
+
+                <HBox spacing="10.0">
+                    <Button text="Сгенерировать HTML"
+                            onAction="#onGenerate"
+                            maxWidth="Infinity"
+                            HBox.hgrow="ALWAYS"
+                            styleClass="primary-button"/>
+
+                    <Button text="Очистить"
+                            onAction="#onClear"
+                            styleClass="secondary-button"/>
+                </HBox>
+
+                <Label fx:id="statusLabel"
+                       text="Готово"
+                       styleClass="status-label"/>
+
+            </VBox>
+
+        </SplitPane>
+    </center>
+
+</BorderPane>

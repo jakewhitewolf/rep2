@@ -1,0 +1,86 @@
+@startuml
+abstract class com.example.rep2.HtmlComponent {
+# String cssClass
++ {abstract}String renderHTML()
++ void addCSSClass(String)
++ void add(HtmlComponent)
++ void remove(HtmlComponent)
+}
+
+
+class com.example.rep2.ImageNode {
+- String src
++ String renderHTML()
++ String getSrc()
+}
+
+
+class com.example.rep2.MainApplication {
++ void start(Stage)
++ {static} void main(String[])
+}
+
+class com.example.rep2.MainController {
+- TreeView<String> structureTree
+- TextField tagField
+- TextField textField
+- TextField rowField
+- TextField cssClassField
+- TextArea htmlPreview
+- Label statusLabel
+- Map<TreeItem<String>,HtmlComponent> components
+- HtmlContainer documentRoot
+- Properties properties
++ void initialize()
+- void initializeDocument()
+- void onAddContainer()
+- void onAddText()
+- void onAddImage()
+- void onAddTableRow()
+- void onAddCssClass()
+- void onDelete()
+- void onGenerate()
+- void onClear()
+- TreeItem<String> getSelectedItem()
+- void removeFromMap(TreeItem<String>)
+- void showError(String)
+- void loadProperties()
+}
+
+
+class com.example.rep2.CompositeException {
+}
+class com.example.rep2.TextNode {
+- String text
++ String renderHTML()
++ String getText()
+}
+
+
+class com.example.rep2.HtmlContainer {
+- String tag
+- List<HtmlComponent> children
++ void add(HtmlComponent)
++ void remove(HtmlComponent)
++ String renderHTML()
++ List<HtmlComponent> getChildren()
++ String getTag()
+}
+
+
+class com.example.rep2.TableRowNode {
+- String content
++ String renderHTML()
++ String getContent()
+}
+
+
+
+
+com.example.rep2.HtmlComponent <|-- com.example.rep2.ImageNode
+javafx.application.Application <|-- com.example.rep2.MainApplication
+com.example.rep2.RuntimeException <|-- com.example.rep2.CompositeException
+com.example.rep2.HtmlComponent <|-- com.example.rep2.TextNode
+com.example.rep2.HtmlComponent <|-- com.example.rep2.HtmlContainer
+com.example.rep2.HtmlComponent <|-- com.example.rep2.TableRowNode
+@enduml
